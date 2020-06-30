@@ -29,6 +29,17 @@ namespace TicTacToeMasters
             iniciarJuego();
         }
 
+        public void obtenerJugadores(Jugador miJugador, Jugador jugadorRival)
+        {
+            this.labelJugador1.Text = miJugador.usuario;
+            this.labelPuntos1.Text = miJugador.puntaje.ToString();
+            this.labelVictorias1.Text = miJugador.calcularPorcentaje().ToString() + "%";
+
+            this.labelJugador2.Text = jugadorRival.usuario;
+            this.labelPuntos2.Text = jugadorRival.puntaje.ToString();
+            this.labelVictorias2.Text = jugadorRival.calcularPorcentaje().ToString() + "%";
+        }
+
         private void iniciarJuego()
         {
             turno = 1;

@@ -46,6 +46,7 @@ namespace TicTacToeMasters
         public void botonJugar()
         {
             this.buttonJugar.Enabled = !this.buttonJugar.Enabled;
+            this.buttonSalir.Enabled = !this.buttonSalir.Enabled;
         }
     }
 }

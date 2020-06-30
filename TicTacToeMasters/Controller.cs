@@ -64,9 +64,10 @@ namespace TicTacToeMasters
         {
            
             conexion.entrarCola(miJugador);
-            conexion.enviarMensaje(miJugador);
             FormEnCola fec = new FormEnCola(this,fm);
             fec.Show();
+            conexion.enviarMensaje(miJugador);
+            
             obtenerRival();
 
             if (obtenerRival() != null)
@@ -78,6 +79,7 @@ namespace TicTacToeMasters
                 fm.botonJugar();
                 FormJuego fj = new FormJuego(fm, miJugador, this);
                 fj.Show();
+                fj.obtenerJugadores(miJugador, jugadorRival);
                 fm.Hide();
             }
             
