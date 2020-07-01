@@ -14,6 +14,7 @@ namespace TicTacToeMasters.Models
         TcpClient socket = new TcpClient();
         NetworkStream stream;
         Jugador rival = null;
+        string message = "";
 
         public bool conectar()
         {
@@ -40,9 +41,20 @@ namespace TicTacToeMasters.Models
 
         public void enviarMensaje(Jugador miJugador)
         {
-            //var msgEnv = "Hola como estas?";
+            
             var msgEnv = JsonConvert.SerializeObject(miJugador);
-            //Console.WriteLine(msgEnv);
+            var sendBytes = System.Text.Encoding.ASCII.GetBytes(msgEnv);
+            byte[] intBytes = BitConverter.GetBytes(sendBytes.Length);
+            stream.Write(intBytes, 0, intBytes.Length);
+            stream.Write(sendBytes, 0, sendBytes.Length);
+            stream.Flush();
+            recibirMensaje();
+        }
+
+        public void enviarMensaje(string message)
+        {
+            
+            var msgEnv = message;
             var sendBytes = System.Text.Encoding.ASCII.GetBytes(msgEnv);
             byte[] intBytes = BitConverter.GetBytes(sendBytes.Length);
             stream.Write(intBytes, 0, intBytes.Length);
@@ -67,6 +79,7 @@ namespace TicTacToeMasters.Models
             }
             else
             {
+                message = msgRec;
                 //System.Console.WriteLine(msgRec);
             } 
         }
@@ -75,7 +88,12 @@ namespace TicTacToeMasters.Models
         {
            return rival;
         }
-        
+
+        public string obtenerMensaje()
+        {
+            return message;
+        }
+
         public void entrarCola(Jugador miJugador)
         {
             miJugador.setMensaje(1);
@@ -85,12 +103,6 @@ namespace TicTacToeMasters.Models
             miJugador.setMensaje(2);
         }
        
-        /*
-        private void generarJugada(int posicionArray)
-        {
-
-        }
-        */
        
     }
 }

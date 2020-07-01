@@ -19,6 +19,7 @@ namespace TicTacToeMasters
         FormMenu formMenu;
         Controller con;
         Jugador miJugador;
+        Jugador jugadorRival;
 
         public FormJuego(FormMenu formMenu, Jugador miJugador, Controller con)
         {
@@ -31,6 +32,8 @@ namespace TicTacToeMasters
 
         public void obtenerJugadores(Jugador miJugador, Jugador jugadorRival)
         {
+            this.jugadorRival = jugadorRival;
+
             this.labelJugador1.Text = miJugador.usuario;
             this.labelPuntos1.Text = miJugador.puntaje.ToString();
             this.labelVictorias1.Text = miJugador.calcularPorcentaje().ToString() + "%";
@@ -63,13 +66,21 @@ namespace TicTacToeMasters
 
                 }
             }
-
+            string turn = con.mensajesPartida("start");
+            if (turn.Equals("Esperar"))
+            {
+                tableTablero.Enabled = false;
+            }
+            else
+            {
+                tableTablero.Enabled = true;
+            }
         }
 
         private void Jugar(object sender, EventArgs e)
         {
             var fichaSeleccionada = (PictureBox)sender;
-            Console.WriteLine(fichaSeleccionada.Name); //Imprime el espacio ;D
+            //Console.WriteLine(fichaSeleccionada.Name); //Imprime el espacio ;D
             fichaSeleccionada.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("ficha_"+turno);
             fichaSeleccionada.Enabled = false;
             string[] posicion = fichaSeleccionada.Name.Split("_".ToCharArray());
@@ -78,7 +89,30 @@ namespace TicTacToeMasters
             tabla[fila,columna] = turno;
             verificarJuego(fila,columna);
             turno = (turno == 1) ? 2 : 1;
+            string fichaRival = con.mensajesPartida(fichaSeleccionada.Name);
+            // TODO: manejar comportamiento de Enabled
+            //juegaRival(fichaRival);
         }
+
+        /*
+        private void juegaRival(string aa)
+        {
+            var fichaElegida = aa;
+            
+            PictureBox fichaSeleccionada = (PictureBox)sender;
+            //Console.WriteLine(fichaSeleccionada.Name); //Imprime el espacio ;D
+            fichaSeleccionada.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("ficha_" + turno);
+            fichaSeleccionada.Enabled = false;
+            string[] posicion = fichaSeleccionada.Name.Split("_".ToCharArray());
+            int fila = Convert.ToInt32(posicion[0]);
+            int columna = Convert.ToInt32(posicion[1]);
+            tabla[fila, columna] = turno;
+            verificarJuego(fila, columna);
+            turno = (turno == 1) ? 2 : 1;
+            //tableTablero.Enabled = true;
+            
+        }
+        */
 
         private void verificarJuego(int fila, int columna)
         {

@@ -82,11 +82,16 @@ namespace TicTacToeMasters
                 fj.obtenerJugadores(miJugador, jugadorRival);
                 fm.Hide();
             }
-            
-            
-
+     
             
         }
+
+        public string mensajesPartida(string msj)
+        {
+            conexion.enviarMensaje(msj);
+            return conexion.obtenerMensaje();
+        }
+
         public Models.Jugador obtenerRival()
         {
             jugadorRival = conexion.obtenerRival();
