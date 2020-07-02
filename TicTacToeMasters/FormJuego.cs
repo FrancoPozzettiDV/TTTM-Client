@@ -16,10 +16,12 @@ namespace TicTacToeMasters
         int turno;
         int[,] tabla;
         bool hayGanador;
+        bool hayEmpate;
         FormMenu formMenu;
         Controller con;
         Jugador miJugador;
         Jugador jugadorRival;
+        List<PictureBox> fichas = new List<PictureBox>();
 
         public FormJuego(FormMenu formMenu, Jugador miJugador, Controller con)
         {
@@ -63,13 +65,16 @@ namespace TicTacToeMasters
                     ficha.Click += Jugar;
                     tableTablero.Controls.Add(ficha, j, i);
                     tabla[i, j] = 0;
-
+                    fichas.Add(ficha);
                 }
             }
             string turn = con.mensajesPartida("start");
             if (turn.Equals("Esperar"))
             {
                 tableTablero.Enabled = false;
+                turno = 2;
+                string fichita = con.mensajesPartida("wait");
+                juegaRival(fichita);
             }
             else
             {
@@ -77,10 +82,21 @@ namespace TicTacToeMasters
             }
         }
 
+        private PictureBox recorrerLista(string fichita)
+        {
+            foreach (var fi in fichas)
+            {
+                if (fi.Name.Equals(fichita))
+                {
+                    return fi;
+                }
+            }
+            return null;
+        }
+
         private void Jugar(object sender, EventArgs e)
         {
             var fichaSeleccionada = (PictureBox)sender;
-            //Console.WriteLine(fichaSeleccionada.Name); //Imprime el espacio ;D
             fichaSeleccionada.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("ficha_"+turno);
             fichaSeleccionada.Enabled = false;
             string[] posicion = fichaSeleccionada.Name.Split("_".ToCharArray());
@@ -89,18 +105,18 @@ namespace TicTacToeMasters
             tabla[fila,columna] = turno;
             verificarJuego(fila,columna);
             turno = (turno == 1) ? 2 : 1;
-            string fichaRival = con.mensajesPartida(fichaSeleccionada.Name);
-            // TODO: manejar comportamiento de Enabled
-            //juegaRival(fichaRival);
+            if(!hayGanador || !hayEmpate)
+            {
+                string fichaRival = con.mensajesPartida(fichaSeleccionada.Name);
+                tableTablero.Enabled = false;
+                juegaRival(fichaRival);
+            }
         }
 
-        /*
-        private void juegaRival(string aa)
+        
+        private void juegaRival(string fichita)
         {
-            var fichaElegida = aa;
-            
-            PictureBox fichaSeleccionada = (PictureBox)sender;
-            //Console.WriteLine(fichaSeleccionada.Name); //Imprime el espacio ;D
+            PictureBox fichaSeleccionada = recorrerLista(fichita);
             fichaSeleccionada.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("ficha_" + turno);
             fichaSeleccionada.Enabled = false;
             string[] posicion = fichaSeleccionada.Name.Split("_".ToCharArray());
@@ -109,10 +125,9 @@ namespace TicTacToeMasters
             tabla[fila, columna] = turno;
             verificarJuego(fila, columna);
             turno = (turno == 1) ? 2 : 1;
-            //tableTablero.Enabled = true;
-            
+            tableTablero.Enabled = true;
         }
-        */
+        
 
         private void verificarJuego(int fila, int columna)
         {
@@ -164,7 +179,7 @@ namespace TicTacToeMasters
             }
             else
             {
-                bool hayEmpate = true;
+                hayEmpate = true;
                 
                 for (var i = 0; i<tateti; i++)
                 {
@@ -187,13 +202,13 @@ namespace TicTacToeMasters
             {
                 if(turno == 1)
                 {
-                    MessageBox.Show("Jugador 1 ha ganado!");
+                    MessageBox.Show(miJugador.usuario + " ha ganado!");
                     tableTablero.Enabled = false;
                     btnVolver.Enabled = true;
                 }
                 else
                 {
-                    MessageBox.Show("Jugador 2 ha ganado!");
+                    MessageBox.Show(jugadorRival.usuario + " ha ganado!");
                     tableTablero.Enabled = false;
                     btnVolver.Enabled = true;
                 }
