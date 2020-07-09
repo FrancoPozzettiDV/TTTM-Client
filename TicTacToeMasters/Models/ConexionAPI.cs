@@ -27,7 +27,7 @@ namespace TicTacToeMasters.Models
 
         public Jugador obtenerUsuario(string nombre, string contraseña)
         {
-            Console.WriteLine("Contactando API de web");
+            Console.WriteLine("Contactando Web API");
             var request = new RestRequest("api/" + nombre);
             var response = client.Get(request).Content;
             if (response == "null")
@@ -57,12 +57,11 @@ namespace TicTacToeMasters.Models
         public void modificarUsuario(Jugador juga) 
         {
             // Modifico una persona
-            Console.Out.WriteLine("Modifico un usuario");
+            Console.Out.WriteLine("Contactando Web API");
             var request = new RestRequest("api/"+juga.usuario);
             request.RequestFormat = DataFormat.Json;
             request.AddJsonBody(new { id = juga.id, nombre = juga.usuario, puntaje = juga.puntaje, partidasJugadas = juga.partidasJugadas, partidasGanadas = juga.partidasGanadas });
             var response = client.Put(request).Content;
-            //Console.Out.WriteLine(JsonConvert.DeserializeObject(response));
         }
 
 

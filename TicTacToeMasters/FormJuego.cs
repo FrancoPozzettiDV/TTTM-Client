@@ -105,27 +105,36 @@ namespace TicTacToeMasters
             tabla[fila,columna] = turno;
             verificarJuego(fila,columna);
             turno = (turno == 1) ? 2 : 1;
-            if(!hayGanador || !hayEmpate)
+            string fichaRival = con.mensajesPartida(fichaSeleccionada.Name);
+            tableTablero.Enabled = false;
+            juegaRival(fichaRival);
+            if(hayGanador || hayEmpate)
             {
-                string fichaRival = con.mensajesPartida(fichaSeleccionada.Name);
-                tableTablero.Enabled = false;
-                juegaRival(fichaRival);
+                con.mensajesPartida("fin");
             }
+            
         }
 
-        
+
         private void juegaRival(string fichita)
         {
-            PictureBox fichaSeleccionada = recorrerLista(fichita);
-            fichaSeleccionada.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("ficha_" + turno);
-            fichaSeleccionada.Enabled = false;
-            string[] posicion = fichaSeleccionada.Name.Split("_".ToCharArray());
-            int fila = Convert.ToInt32(posicion[0]);
-            int columna = Convert.ToInt32(posicion[1]);
-            tabla[fila, columna] = turno;
-            verificarJuego(fila, columna);
-            turno = (turno == 1) ? 2 : 1;
-            tableTablero.Enabled = true;
+            if (fichita != "Fin")
+            {
+                PictureBox fichaSeleccionada = recorrerLista(fichita);
+                
+                if (fichaSeleccionada != null) 
+                { 
+                    fichaSeleccionada.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("ficha_" + turno);
+                    fichaSeleccionada.Enabled = false;
+                    string[] posicion = fichaSeleccionada.Name.Split("_".ToCharArray());
+                    int fila = Convert.ToInt32(posicion[0]);
+                    int columna = Convert.ToInt32(posicion[1]);
+                    tabla[fila, columna] = turno;
+                    verificarJuego(fila, columna);
+                    turno = (turno == 1) ? 2 : 1;
+                    tableTablero.Enabled = true;
+                }//else{}
+            }//else{}
         }
         
 
@@ -195,6 +204,7 @@ namespace TicTacToeMasters
                 {
                     MessageBox.Show("Empate...");
                     btnVolver.Enabled = true;
+                    con.obtenerEmpate(miJugador);
                 }
             }
 
@@ -205,12 +215,14 @@ namespace TicTacToeMasters
                     MessageBox.Show(miJugador.usuario + " ha ganado!");
                     tableTablero.Enabled = false;
                     btnVolver.Enabled = true;
+                    con.obtenerGanador(miJugador);
                 }
                 else
                 {
                     MessageBox.Show(jugadorRival.usuario + " ha ganado!");
                     tableTablero.Enabled = false;
                     btnVolver.Enabled = true;
+                    con.obtenerPerdedor(miJugador);
                 }
 
             }
@@ -222,9 +234,7 @@ namespace TicTacToeMasters
 
         private void button2_Click(object sender, EventArgs e)
         {
-            formMenu.Show();
-            this.Hide();
-            this.Close();
+            con.terminarPartida();
         }
 
       

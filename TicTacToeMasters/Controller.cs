@@ -11,6 +11,7 @@ namespace TicTacToeMasters
     {
         private FormLogin login;
         public FormMenu fm;
+        public FormJuego fj;
         private Models.ConexionSocketServer conexion = new Models.ConexionSocketServer();
         private Models.ConexionAPI api = Models.ConexionAPI.getInstancia();
         public Models.Jugador miJugador;
@@ -46,6 +47,7 @@ namespace TicTacToeMasters
                     if (!conexion.conectar())
                     {
                         login.mostrarError("No es posible conectarse al servidor\nVuelva a intentar más tarde");
+                        login.Close();
                     }
                     else
                     {
@@ -76,14 +78,27 @@ namespace TicTacToeMasters
                 MessageBox.Show("Presione aceptar para empezar");
                 salirCola();
                 fec.Close();
-                fm.botonJugar();
-                FormJuego fj = new FormJuego(fm, miJugador, this);
+                fm.botones();
+                fj = new FormJuego(fm, miJugador, this);
                 fj.Show();
                 fj.obtenerJugadores(miJugador, jugadorRival);
                 fm.Hide();
             }
      
             
+        }
+
+        public void terminarPartida()
+        {
+
+            api.modificarUsuario(miJugador);
+            conexion.eliminarRival();
+            jugadorRival = null;
+            fm.actualizarDatos(miJugador);
+            fm.Show();
+            fj.Hide();
+            fj.Close();
+
         }
 
         public string mensajesPartida(string msj)
@@ -104,7 +119,23 @@ namespace TicTacToeMasters
             conexion.enviarMensaje(miJugador);
         }
 
-        
-        
+        public void obtenerGanador(Models.Jugador player)
+        {
+            miJugador.puntaje = miJugador.puntaje + 20;
+            miJugador.partidasGanadas = miJugador.partidasGanadas + 1;
+            miJugador.partidasJugadas = miJugador.partidasJugadas + 1;
+        }
+
+        public void obtenerPerdedor(Models.Jugador player)
+        {
+            miJugador.puntaje = miJugador.puntaje - 20;
+            miJugador.partidasJugadas = miJugador.partidasJugadas + 1;
+        }
+
+        public void obtenerEmpate(Models.Jugador player)
+        {
+            miJugador.partidasJugadas = miJugador.partidasJugadas + 1;
+        }
+
     }
 }

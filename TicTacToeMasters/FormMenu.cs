@@ -23,9 +23,14 @@ namespace TicTacToeMasters
             this.formLogin = formLogin;
             this.miJugador = miJugador;
             this.con = con;
+            actualizarDatos(miJugador);
+        }
+
+        public void actualizarDatos(Jugador miJugador)
+        {
             this.labelUsuarioAPI.Text = miJugador.usuario;
             this.labelPuntosAPI.Text = miJugador.puntaje.ToString();
-            this.labelVictoriasAPI.Text = miJugador.calcularPorcentaje().ToString()+"%";
+            this.labelVictoriasAPI.Text = miJugador.calcularPorcentaje().ToString() + "%";
         }
 
 
@@ -38,12 +43,12 @@ namespace TicTacToeMasters
 
         private void buttonJugar_Click(object sender, EventArgs e)
         {
-            botonJugar();
+            botones();
             con.jugar();
             
         }
 
-        public void botonJugar()
+        public void botones()
         {
             this.buttonJugar.Enabled = !this.buttonJugar.Enabled;
             this.buttonSalir.Enabled = !this.buttonSalir.Enabled;

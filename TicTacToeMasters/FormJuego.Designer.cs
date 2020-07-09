@@ -50,7 +50,7 @@
             this.tableTablero.ColumnCount = 3;
             this.tableTablero.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.8F));
             this.tableTablero.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.2F));
-            this.tableTablero.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
+            this.tableTablero.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132F));
             this.tableTablero.Location = new System.Drawing.Point(252, 27);
             this.tableTablero.Name = "tableTablero";
             this.tableTablero.RowCount = 3;
@@ -149,7 +149,7 @@
             this.labelVictorias1.BackColor = System.Drawing.Color.Transparent;
             this.labelVictorias1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelVictorias1.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.labelVictorias1.Location = new System.Drawing.Point(86, 336);
+            this.labelVictorias1.Location = new System.Drawing.Point(90, 336);
             this.labelVictorias1.Name = "labelVictorias1";
             this.labelVictorias1.Size = new System.Drawing.Size(78, 15);
             this.labelVictorias1.TabIndex = 9;
@@ -161,7 +161,7 @@
             this.labelVictorias2.BackColor = System.Drawing.Color.Transparent;
             this.labelVictorias2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelVictorias2.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.labelVictorias2.Location = new System.Drawing.Point(724, 336);
+            this.labelVictorias2.Location = new System.Drawing.Point(728, 336);
             this.labelVictorias2.Name = "labelVictorias2";
             this.labelVictorias2.Size = new System.Drawing.Size(78, 15);
             this.labelVictorias2.TabIndex = 10;

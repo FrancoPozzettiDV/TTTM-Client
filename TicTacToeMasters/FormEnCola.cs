@@ -27,7 +27,7 @@ namespace TicTacToeMasters
         private void button1_Click(object sender, EventArgs e)
         {
             con.salirCola();
-            formMenu.botonJugar();
+            formMenu.botones();
             this.Close();
         }
 

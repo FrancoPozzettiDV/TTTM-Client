@@ -23,7 +23,7 @@ namespace TicTacToeMasters.Models
                 conectarPrivate();
                 return true;
             }
-            catch (SocketException e)
+            catch (SocketException )
             {
               Console.WriteLine("No es posible conectarse al servidor\nVuelva a intentar más tarde");
               return false;
@@ -87,6 +87,10 @@ namespace TicTacToeMasters.Models
         public Jugador obtenerRival()
         {
            return rival;
+        }
+        public void eliminarRival()
+        {
+            rival = null;
         }
 
         public string obtenerMensaje()
