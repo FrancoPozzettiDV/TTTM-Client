@@ -32,7 +32,14 @@ namespace TicTacToeMasters.Models
 
         public float calcularPorcentaje()
         {
-            return (partidasGanadas * 100) / partidasJugadas;
+            if(partidasJugadas == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return (partidasGanadas * 100) / partidasJugadas;
+            } 
         }
 
         public void setMensaje(int msg)
